@@ -37,6 +37,9 @@ function! match_throb#init() "{{{
 
   let g:match_throb_sticky_hl = get(g:, 'match_throb_sticky_hl', s:get_hl_IncSearch())
 
+  let g:match_throb_hide_hlsearch = get(g:, 'match_throb_hide_hlsearch', 1)
+
+
   let g:match_throb_group = 'throbHL'
 
 endfunction "}}}
@@ -180,8 +183,14 @@ function! match_throb#do_throb_sequence(hlSequence, ...) "{{{
 
   " store the current matches so it can return to current state if aborted
   let save_matches = getmatches()
+  let save_hlsearch = &hlsearch
 
   let cmds = []
+
+  if g:match_throb_hide_hlsearch
+    call add(cmds, 'set nohlsearch')
+  endif
+
   call add(cmds, 'set nohlsearch')
 
   " NOTE: shouldn't need now since it should always be list of dicts now
@@ -197,6 +206,9 @@ function! match_throb#do_throb_sequence(hlSequence, ...) "{{{
   endfor
 
 
+  if g:match_throb_hide_hlsearch
+    call add(cmds, 'let &hlsearch = save_hlsearch')
+  endif
   call add(cmds, 'set hlsearch')
 
   if g:match_throb_sticky
@@ -221,6 +233,11 @@ function! match_throb#do_throb_sequence(hlSequence, ...) "{{{
     endif
 
   endfor
+
+  " reset hlsearch if it wasn't reset already 
+  if g:match_throb_hide_hlsearch && &hlsearch != save_hlsearch
+    let &hlsearch = save_hlsearch
+  endif
 
 endfunction "}}}
 
