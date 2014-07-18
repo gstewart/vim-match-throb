@@ -177,7 +177,7 @@ function! match_throb#do_throb_sequence(hlSequence, ...) "{{{
 
   let seq = call('s:get_hl_sequence_arg', [a:hlSequence] + a:000)
 
-  let param = getreg('/')
+  let param = substitute(getreg('/'), "'", "''", "g")
   let pos = getpos('.')
   let pattern = '\%'.pos[1].'l\%'.pos[2].'c'.param.'\c'
 
