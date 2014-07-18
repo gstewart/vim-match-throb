@@ -167,14 +167,6 @@ endfunction "}}}
 
 
 function! match_throb#do_throb_sequence(hlSequence, ...) "{{{
-  " let sequence_repeat = (a:0 >= 1) ? (a:1 + 0) : g:match_throb_repeat
-  " let sequence_sleep = (a:0 >= 2) ? (a:2 + 0) : g:match_throb_sleep
-  "
-  " let seq = (type(a:hlSequence) == type("")) ?
-  "       \ [{'count': sequence_repeat, 'time': sequence_sleep, 'hiColors': a:hlSequence}] :
-  "       \ ((type(a:hlSequence) == type([])) ?
-  "       \ map(a:hlSequence, '{"count": sequence_repeat, "time": sequence_sleep, "hiColors": v:val}') : a:hlSequence)
-
   let seq = call('s:get_hl_sequence_arg', [a:hlSequence] + a:000)
 
   let param = substitute(getreg('/'), "'", "''", "g")
@@ -191,15 +183,6 @@ function! match_throb#do_throb_sequence(hlSequence, ...) "{{{
     call add(cmds, 'set nohlsearch')
   endif
 
-
-  " NOTE: shouldn't need now since it should always be list of dicts now
-  " for entry in seq
-  "   if type(entry) == type({})
-  "     call extend(cmds, s:get_throb_step(entry.count, entry.time, entry.hiColors, pattern ))
-  "   else
-  "     call extend(cmds, s:get_throb_step(sequence_repeat, sequence_sleep, entry, pattern))
-  "   endif
-  " endfor
   for entry in seq
     call extend(cmds, s:get_throb_step(entry.count, entry.time, entry.hiColors, pattern))
   endfor
@@ -229,7 +212,6 @@ function! match_throb#do_throb_sequence(hlSequence, ...) "{{{
       call setmatches(save_matches)
       break
     endif
-
   endfor
 
   " reset hlsearch if it wasn't reset already 
