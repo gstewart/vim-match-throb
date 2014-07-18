@@ -191,7 +191,6 @@ function! match_throb#do_throb_sequence(hlSequence, ...) "{{{
     call add(cmds, 'set nohlsearch')
   endif
 
-  call add(cmds, 'set nohlsearch')
 
   " NOTE: shouldn't need now since it should always be list of dicts now
   " for entry in seq
@@ -209,7 +208,6 @@ function! match_throb#do_throb_sequence(hlSequence, ...) "{{{
   if g:match_throb_hide_hlsearch
     call add(cmds, 'let &hlsearch = save_hlsearch')
   endif
-  call add(cmds, 'set hlsearch')
 
   if g:match_throb_sticky
     " TODO: no way to pass this so always using the global var
