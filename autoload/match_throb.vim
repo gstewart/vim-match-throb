@@ -124,6 +124,7 @@ endfunction "}}}
 
 
 " args
+"   TODO: think these are the old args so need to update description comments
 "   (hlSequence) single string with hiColors (repeat and sleep time use g:match_throb_repeat and g:match_throb_sleep
 "   example: match_throb#throb_sequence("guifg=#1F1F1F" guibg=#2569C2")
 "
@@ -137,7 +138,7 @@ endfunction "}}}
 " hlSequence can be:
 "   1. a string with highlight colors like 'guifg=#1F1F1F guibg=#2569C2'
 "   2. a string with an existing highlight group name
-"   3. a list of stings like 1 or 2
+"   3. a list of strings like 1 or 2
 "   4. a list of dicts with keys (count, time, hiColors)
 
 function! s:get_hl_sequence_arg(hlSequence, ...) "{{{
@@ -214,7 +215,7 @@ function! match_throb#do_throb_sequence(hlSequence, ...) "{{{
     endif
   endfor
 
-  " reset hlsearch if it wasn't reset already 
+  " reset hlsearch if it wasn't reset already
   if g:match_throb_hide_hlsearch && &hlsearch != save_hlsearch
     let &hlsearch = save_hlsearch
   endif
